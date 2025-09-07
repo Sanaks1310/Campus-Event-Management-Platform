@@ -1,0 +1,5 @@
+HTML files
+These files define the structure of each page of the application. They include profile.html, student.html, admin.html, login_student.html, and login_admin.html. 
+
+CSS files
+These files style the different pages. There are separate stylesheets for the student (student.css), admin (admin.css), and login pages (login.css).
