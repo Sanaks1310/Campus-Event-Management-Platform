@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student App — Campus Events</title>
+  <link rel="stylesheet" href="student.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎉 Campus Events</h1>
+    <div><a href="profile.html" class="btn small">Profile</a> <button onclick="logout()" class="btn danger small">Logout</button></div>
+  </header>
+  <main class="container">
+    <input id="search" class="search" placeholder="🔍 Search events..."/>
+    <h2>Available Events</h2>
+    <ul id="events" class="events"></ul>
+  </main>
+  <footer class="footer">Stay updated with campus life ✨</footer>
+  <script>
+    if(localStorage.getItem('student_logged')!=='true'){location.href='login_student.html';}
+    const list=document.getElementById('events');const search=document.getElementById('search');
+    function load(){return JSON.parse(localStorage.getItem('events')||'[]');}
+    function regs(){return JSON.parse(localStorage.getItem('regs')||'{}');}
+    function save(r){localStorage.setItem('regs',JSON.stringify(r));}
+    function render(f=""){const evs=load();const r=regs();list.innerHTML="";let fl=evs.filter(e=>e.title.toLowerCase().includes(f.toLowerCase()));
+      if(!fl.length){list.innerHTML="<li class='empty'>No events</li>";return;}
+      fl.forEach(ev=>{const st=r[ev.title]||{reg:false,check:false};const li=document.createElement('li');li.className='event';
+        li.innerHTML=`<div><h3>${ev.title}</h3><p>${ev.type} • ${ev.date} • ${ev.time}</p><p>${ev.desc}</p></div><div>`+
+        (st.check?"<span class='badge'>✅ Checked-in</span>":st.reg?`<button class='btn check small' onclick="check('${ev.title}')">Check-in</button>`:
+        `<button class='btn primary small' onclick="reg('${ev.title}')">Register</button>`)+`</div>`;list.appendChild(li);});}
+    function reg(t){let r=regs();r[t]={reg:true,check:false};save(r);render(search.value);}
+    function check(t){let r=regs();r[t].check=true;save(r);render(search.value);}
+    search.oninput=()=>render(search.value);render();
+    function logout(){localStorage.removeItem('student_logged');location.href='login_student.html';}
+  </script>
+</body>
+</html>

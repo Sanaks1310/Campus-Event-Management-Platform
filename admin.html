@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Portal — Campus Events</title>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎓 Admin Dashboard</h1>
+    <button onclick="logout()" class="btn danger small">Logout</button>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h2>Create Event</h2>
+      <form id="eventForm">
+        <label>Title<input type="text" id="title" required></label>
+        <label>Type<select id="type"><option>Workshop</option><option>Hackathon</option><option>Tech Talk</option><option>Fest</option></select></label>
+        <label>Date<input type="date" id="date" required></label>
+        <label>Time<input type="time" id="time" required></label>
+        <label>Description<textarea id="desc"></textarea></label>
+        <button type="submit" class="btn primary">+ Add Event</button>
+      </form>
+    </section>
+    <section class="card">
+      <h2>All Events</h2>
+      <ul id="eventsList" class="events"></ul>
+    </section>
+  </main>
+  <footer class="footer">Campus Event Management © 2025</footer>
+  <script>
+    if(localStorage.getItem('admin_logged')!=='true'){location.href='login_admin.html';}
+    const form=document.getElementById('eventForm');const list=document.getElementById('eventsList');
+    function load(){return JSON.parse(localStorage.getItem('events')||'[]');}
+    function save(a){localStorage.setItem('events',JSON.stringify(a));}
+    function render(){const evs=load();list.innerHTML=evs.length?'':'<li class="empty">No events</li>';
+      evs.forEach((ev,i)=>{const li=document.createElement('li');li.className='event';
+        li.innerHTML=`<div><h3>${ev.title}</h3><p>${ev.type} • ${ev.date} • ${ev.time}</p><p>${ev.desc}</p></div>
+        <button class='btn danger small' onclick='del(${i})'>Delete</button>`;list.appendChild(li);});}
+    function del(i){let evs=load();evs.splice(i,1);save(evs);render();}
+    form.onsubmit=e=>{e.preventDefault();let ev={title:title.value,type:type.value,date:date.value,time:time.value,desc:desc.value};
+      let evs=load();evs.unshift(ev);save(evs);form.reset();render();};render();
+    function logout(){localStorage.removeItem('admin_logged');location.href='login_admin.html';}
+  </script>
+</body>
+</html>

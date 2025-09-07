@@ -1,0 +1,7 @@
+body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(120deg,#4f46e5,#f97316);height:100vh;display:flex;justify-content:center;align-items:center}
+.login-box{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.2);width:300px;text-align:center}
+h2{margin:0 0 20px;color:#4f46e5}
+label{display:block;margin:12px 0;text-align:left}
+input{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px}
+.btn{background:#4f46e5;color:white;padding:10px;border:none;border-radius:6px;margin-top:14px;width:100%;cursor:pointer}
+.switch{margin-top:12px;font-size:14px}

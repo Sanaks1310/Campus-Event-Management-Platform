@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login — Campus Events</title>
+  <link rel="stylesheet" href="login.css"/>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Student Login</h2>
+    <form id="studentLogin">
+      <label>Student ID<input type="text" id="sid" required></label>
+      <label>Password<input type="password" id="spass" required></label>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p class="switch">Admin? <a href="login_admin.html">Login here</a></p>
+  </div>
+  <script>
+    document.getElementById('studentLogin').onsubmit=e=>{
+      e.preventDefault();
+      if(sid.value && spass.value){
+        localStorage.setItem('student_logged','true');
+        localStorage.setItem('student_id',sid.value);
+        location.href='student.html';
+      } else alert('Enter valid credentials');
+    }
+  </script>
+</body>
+</html>

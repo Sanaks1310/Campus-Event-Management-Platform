@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Profile</title>
+  <link rel="stylesheet" href="student.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>👤 My Profile</h1>
+    <a href="student.html" class="btn small">← Back</a>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h2>Student Details</h2>
+      <p><strong>ID:</strong> <span id="sid"></span></p>
+      <p><strong>Email:</strong> <span id="email"></span></p>
+    </section>
+    <section class="card">
+      <h2>My Registrations</h2>
+      <ul id="regs" class="events"></ul>
+    </section>
+  </main>
+  <script>
+    document.getElementById('sid').innerText=localStorage.getItem('student_id');
+    document.getElementById('email').innerText=localStorage.getItem('student_id')+'@college.edu';
+    const regs=JSON.parse(localStorage.getItem('regs')||'{}');const ul=document.getElementById('regs');
+    if(Object.keys(regs).length===0){ul.innerHTML="<li class='empty'>No registrations yet.</li>";}
+    else{Object.keys(regs).forEach(t=>{const st=regs[t];const li=document.createElement('li');li.className='event';
+      li.innerHTML=`<div><h3>${t}</h3></div><span>${st.check?"✅ Checked-in":"Registered"}</span>`;ul.appendChild(li);});}
+  </script>
+</body>
+</html>
